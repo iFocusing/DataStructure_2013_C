@@ -1,0 +1,30 @@
+# Project: ¹¤³Ì1
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = 
+OBJ  = C:/Users/Administrator/Desktop/HuffmanCoding.o $(RES)
+LINKOBJ  = C:/Users/Administrator/Desktop/HuffmanCoding.o $(RES)
+LIBS =  -L"C:/Program Files/DEV-CPP/Lib"  
+INCS =  -I"C:/Program Files/DEV-CPP/include" 
+CXXINCS =  -I"C:/Program Files/DEV-CPP/lib/gcc/mingw32/3.4.2/include"  -I"C:/Program Files/DEV-CPP/include/c++/3.4.2/backward"  -I"C:/Program Files/DEV-CPP/include/c++/3.4.2/mingw32"  -I"C:/Program Files/DEV-CPP/include/c++/3.4.2"  -I"C:/Program Files/DEV-CPP/include" 
+BIN  = HuffmanCoding.exe
+CXXFLAGS = $(CXXINCS)  
+CFLAGS = $(INCS)  
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before HuffmanCoding.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o "HuffmanCoding.exe" $(LIBS)
+
+C:/Users/Administrator/Desktop/HuffmanCoding.o: C:/Users/Administrator/Desktop/HuffmanCoding.c
+	$(CC) -c C:/Users/Administrator/Desktop/HuffmanCoding.c -o C:/Users/Administrator/Desktop/HuffmanCoding.o $(CFLAGS)

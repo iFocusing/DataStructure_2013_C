@@ -1,0 +1,156 @@
+素的a的存储映像，还要存储其直接后继的信息；通过对这种链表结构各种基本操作的实现来完成实验内容。
+
+五、主要函数的实现：
+//----常量头文件---
+ #ifndef _CONSTANT_H
+#define _CONSTANT_H
+
+typedef int ElemType;
+typedef int Status;
+
+#define TRUE 1
+#define FALSE 0
+#define OK 1
+#define ERROR 0
+#define INFEASIBLE -1
+#define OVERFLOW -2
+#endif
+ 
+//---链表头文件---
+
+#ifndef _LinkList_H
+#define _LinkList_H
+
+#include<stdlib.h>
+#include "constant.h"
+typedef struct LNode{
+   ElemType data;
+   struct LNode *next;        
+}LNode,*LinkList;
+
+
+
+Status InitList(LinkList L){
+ int n;
+ LinkList p,q;
+ p=L;
+ printf("请输入n和n个数据元素:\n");
+ scanf("%d",&n);
+ while(n--)
+ {
+  q=(LinkList)malloc(sizeof(LNode));
+  scanf("%d",&q->data);
+  q->next=NULL;
+  p->next=q;
+  p=q;
+ }
+   return OK;     
+}
+
+Status PrintfList(LinkList L){
+    int num=0;
+ LinkList p;
+ p=L->next;
+ while(p)
+ {
+  num++;
+  printf("%d ",p->data);
+  p=p->next;
+ }
+ printf("\n长度为%d:\n",num);
+    return OK;     
+}
+
+
+void Find(LinkList L,int x)//查找值为x的直接前驱结点q
+{
+ LinkList p;
+ p=L;
+ while( p->next &&p->next->data!=x)
+  p=p->next;
+ if(p->next)
+  printf("%d的前驱结点为:%d\n\n",x,p->data);
+ else
+  printf("没找到!!\n\n");
+}
+
+void Delete(LinkList L,int x)//删除值为x的结点
+{
+ LinkList p,q;
+ p=L;
+ while( p->next &&p->next->data!=x)
+  p=p->next;
+ if(p->next)
+ {
+  q=p->next;
+  p->next=q->next;
+  free(q);
+  printf("删除成功!!\n\n");
+ }
+ else
+  printf("链表中没有%d\n\n",x);
+}
+
+Status Delete_Between(LinkList L){
+     int maxk,mink;
+ LinkList p,q,s;
+ printf("请输入mink,maxk:\n");
+ scanf("%d %d",&mink,&maxk);
+ p=L;
+ while(p->next && p->next->data<=mink)
+  p=p->next;
+ s=p->next;
+ while(s && s->data<maxk)
+ {
+  q=s;
+  s=s->next;
+  free(q);
+ }
+ p->next=s;
+ printf("删除成功\n\n");
+     return OK;   
+}
+
+void Insert(LinkList L,LinkList p)//在升序链表插入值为X的结点，使仍然有序
+{
+ LinkList s;
+ s=L;
+ while(s->next && s->next->data < p->data)
+  s=s->next;
+ p->next=s->next;
+ s->next=p;
+}
+Status Sort(LinkList L)//按升序排列
+{
+ LinkList s,r;
+ s=L->next;
+ L->next=NULL;
+ while(s)
+ {
+  r=s;
+  s=s->next;
+  r->next=NULL;
+  Insert(L,r);  
+ }
+ return OK;
+}
+
+#endif 
+
+
+//--主函数---
+#include <stdio.h>
+#include <stdlib.h>
+#include"LinkList.h"
+
+int main(int argc, char *argv[])
+{
+  int n;
+  LinkList L;
+  InitList(L);
+  PrintfList(L); 
+  Delete_Between(L);
+  PrintfList(L); 
+  system("PAUSE");	
+  return 0;
+}  
